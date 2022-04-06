@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using CoreCodeCamp.Data;
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +21,15 @@ namespace CoreCodeCamp
     {
       services.AddDbContext<CampContext>();
       services.AddScoped<ICampRepository, CampRepository>();
+
+      services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 1);
+                options.ReportApiVersions = true;
+            });
 
       services.AddControllers();
     }
